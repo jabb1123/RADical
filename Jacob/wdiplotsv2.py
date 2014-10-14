@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #Data from the world bank at
 #http://databank.worldbank.org/data/download/WDI_csv.zip
 
-LOAD_WDI=True#choose whether to load the large file or a working subset
+LOAD_WDI=False#choose whether to load the large file or a working subset
 
 countrylist=['China','India','Colombia','Puerto Rico','Sweden',
              'Sub-Saharan Africa (all income levels)',
