@@ -9,10 +9,11 @@ plt.close('all')
 #http://databank.worldbank.org/data/download/WDI_csv.zip
 
 LOAD_WDI=True#choose whether to load the large file or a working subset
+SAVE_FIG=True#choose to save the figure as a pdf (or png)
 
-countrylist=['China','India','Colombia','Puerto Rico','Sweden',
+countrylist=['World','China','India','Colombia','Puerto Rico','Sweden',
              'Sub-Saharan Africa (all income levels)',
-             'North America','European Union','OECD members','World']
+             'North America','European Union','OECD members']
 indicatorlist=['Population, total',
                 'Persistence to last grade of primary, total (% of cohort)',                
                 'Literacy rate, adult total (% of people ages 15 and above)',
@@ -56,6 +57,7 @@ mydata['Rank']=range(1,len(mydata)+1)
 
 res = pd.ols(y=mydata['2013'], x=mydata[['2011','2012']])
 print res.summary
+print 'F-test'
 print res.f_test('-1*2011=2')
 
 #mydata=mydata.fillna(method='pad')#forward fill; DANGEROUS!!!
@@ -64,16 +66,16 @@ print res.f_test('-1*2011=2')
 years=[]
 for year in range(1960,2013+1):years.append(str(year))
 
-mymarkersize=15   
 #Choose indicator to plot
 indicator=indicatorlist[2]
-
+        
 fig=plt.figure(1,figsize=(8,3), dpi=120)
 ax=plt.subplot(111)
 
 colorindex=0
 for country in countrylist:
-    mycolor=plt.get_cmap('hsv')(1.*colorindex/len(countrylist))[:3]
+    mycolor=plt.get_cmap('nipy_spectral')(1.*colorindex/len(countrylist))[:3]
+    #good color maps (cmap): nipy_spectral, gist_rainbow
     colorindex+=1
     plt.plot(range(1960,2013+1),
              mydata[years][(mydata['Country Name']==country)&
@@ -102,6 +104,7 @@ ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ax.legend(loc='center left', bbox_to_anchor=(1.01, 0.5), fontsize=10,framealpha=0)
 
 plt.show()
-#uncomment to save figure
-plt.savefig(indicator[:8]+'.pdf', bbox_inches='tight')
-#plt.savefig(indicator[:8]+'.png', bbox_inches='tight')
+
+if SAVE_FIG:
+    plt.savefig(indicator[:8]+'.pdf', bbox_inches='tight')
+    #plt.savefig(indicator[:8]+'.png', bbox_inches='tight')
