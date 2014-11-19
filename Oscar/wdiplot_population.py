@@ -7,7 +7,7 @@ plt.close('all')
 #Data from the World Bank Development Indicators at
 #http://databank.worldbank.org/data/download/WDI_csv.zip
 
-LOAD_WDI=False#choose whether to load the large file or a working subset
+LOAD_WDI=True#choose whether to load the large file or a working subset
 
 #countrylist=[]
 indicatorlist=['Population, total',
@@ -90,5 +90,5 @@ ax.legend(loc='center left', bbox_to_anchor=(1.01, 0.5), fontsize=10,framealpha=
 
 plt.show()
 #uncomment to save figure
-#plt.savefig(indicator+rankcol+'.pdf', bbox_inches='tight')
-#plt.savefig(indicator+rankcol+'.png', bbox_inches='tight')
+plt.savefig(indicator[:8]+rankcol+'.pdf', bbox_inches='tight')
+#plt.savefig(indicator[:8]+rankcol+'.png', bbox_inches='tight')

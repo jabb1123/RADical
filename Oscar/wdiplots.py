@@ -8,7 +8,7 @@ plt.close('all')
 #Data from the World Bank Development Indicators at
 #http://databank.worldbank.org/data/download/WDI_csv.zip
 
-LOAD_WDI=False#choose whether to load the large file or a working subset
+LOAD_WDI=True#choose whether to load the large file or a working subset
 
 countrylist=['China','India','Colombia','Puerto Rico','Sweden',
              'Sub-Saharan Africa (all income levels)',
@@ -103,5 +103,5 @@ ax.legend(loc='center left', bbox_to_anchor=(1.01, 0.5), fontsize=10,framealpha=
 
 plt.show()
 #uncomment to save figure
-plt.savefig(indicator+'.pdf', bbox_inches='tight')
-#plt.savefig(indicator+'.png', bbox_inches='tight')
+plt.savefig(indicator[:8]+'.pdf', bbox_inches='tight')
+#plt.savefig(indicator[:8]+'.png', bbox_inches='tight')
