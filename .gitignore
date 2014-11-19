@@ -57,3 +57,6 @@ target/
 # Data files
 *.csv
 
+*.gz
+*.aux
+*.out
