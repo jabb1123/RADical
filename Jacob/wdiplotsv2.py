@@ -9,9 +9,12 @@ import matplotlib.pyplot as plt
 
 LOAD_WDI=False#choose whether to load the large file or a working subset
 
-countrylist=['China','India','Colombia','Puerto Rico','Sweden',
-             'Sub-Saharan Africa (all income levels)',
-             'North America','European Union','OECD members','World']
+countrylist=['China',
+             'East Asia & Pacific (all income levels)',
+             'Hong Kong SAR, China',
+             'Singapore',
+             'Korea, Rep.',
+             'South Asia']
 indicatorlist=['Population, total',
                 'Persistence to last grade of primary, total (% of cohort)',                
                 'Literacy rate, adult total (% of people ages 15 and above)',
@@ -22,7 +25,8 @@ indicatorlist=['Population, total',
                 'Income share held by fourth 20%',
                 'Income share held by highest 20%',
                 'Income share held by lowest 10%',
-                'Income share held by highest 10%']
+                'Income share held by highest 10%',
+                'GDP per capita (current US$)']
 
 if LOAD_WDI:
     data=pandas.read_csv('WDI_Data.csv')#the whole thing!!!
@@ -81,7 +85,7 @@ deltaregion={'South Asia':100**shift_regions,
 
 mymarkersize=20    
 #Choose indicator to plot
-indicator=indicatorlist[2]
+indicator=indicatorlist[11]
 
 plt.close('all')
 fig=plt.figure(1,figsize=(16, 8), dpi=60)

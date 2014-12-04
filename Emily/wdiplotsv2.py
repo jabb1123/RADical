@@ -81,7 +81,7 @@ deltaregion={'South Asia':100**shift_regions,
 
 mymarkersize=20    
 #Choose indicator to plot
-indicator=indicatorlist[2]
+indicator=indicatorlist[3]
 
 plt.close('all')
 fig=plt.figure(1,figsize=(16, 8), dpi=60)
