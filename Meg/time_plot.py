@@ -2,9 +2,6 @@ import pandas
 import numpy as np
 import matplotlib.pyplot as plt
 
-import matplotlib            
-print matplotlib.rcParams['backend']
-
 
 #read in our data as a pandas DataFrame (essentially a table)
 #Data from the world bank at
@@ -12,19 +9,20 @@ print matplotlib.rcParams['backend']
 
 LOAD_WDI=True#choose whether to load the large file or a working subset
 
-countrylist=['Sub-Saharan Africa (all income levels)', 'Tanzania',
-             'North America','World']
-indicatorlist=['Population, total',
-                'Persistence to last grade of primary, total (% of cohort)',                
-                'Literacy rate, adult total (% of people ages 15 and above)',
-                'GINI index',
-                'Income share held by lowest 20%',
-                'Income share held by second 20%',
-                'Income share held by third 20%',
-                'Income share held by fourth 20%',
-                'Income share held by highest 20%',
-                'Income share held by lowest 10%',
-                'Income share held by highest 10%']
+countrylist=['Europe & Central Asia (all income levels)',
+             'East Asia & Pacific (all income levels)',
+             'Latin America & Caribbean (all income levels)',
+             'Middle East & North Africa (all income levels)',
+             'Sub-Saharan Africa (all income levels)',
+             'South Asia']
+indicatorlist=['Unemployment, female (% of female labor force) (modeled ILO estimate)',
+                'Ratio of female to male labor force participation rate (%) (modeled ILO estimate)',
+                'Employment to population ratio, 15+, female (%) (modeled ILO estimate)',
+                'Wage and salaried workers, female (% of females employed)',
+                'Vulnerable employment, female (% of female employment)',
+                'Literacy rate, adult female (% of females ages 15 and above)',
+                'Life expectancy at birth, female (years)',
+                'Ratio of female to male primary enrollment (%)']
 
 if LOAD_WDI:
     data=pandas.read_csv('WDI_Data.csv')#the whole thing!!!
@@ -81,25 +79,31 @@ deltaregion={'South Asia':100**shift_regions,
               'Sub-Saharan Africa':.01**shift_regions,
               'Latin America & Caribbean':.001**shift_regions}  
 
-mymarkersize=20    
+mymarkersize=100    
 #Choose indicator to plot
-indicator=indicatorlist[2]
+indicator=indicatorlist[7]
 
 plt.close('all')
-fig=plt.figure(1,figsize=(16, 8), dpi=60)
+fig=plt.figure(1,figsize=(12, 8), dpi=80)
 colorindex=0 #cycle colors
 for country in countrylist:
     plt.plot(range(1960,2013+1),data[years][(data['Country Name']==country)&
-        (data['Indicator Name']==indicator)].values[0],'o',
-        markersize=mymarkersize,alpha=0.3,color=color[colorindex],
+        (data['Indicator Name']==indicator)].values[0],'-',linewidth=2.5,
+        markersize=mymarkersize,alpha=1,color=color[colorindex],
         markeredgecolor=(0,0,0))
     colorindex +=1
 
+
 #plt.title(indicator+', '+rankcol)
+#plt.title(indicator+', 1990-2012',fontsize=16)
 plt.grid(which='both')
-plt.xlabel('Years')
-plt.ylabel(indicator)
-plt.legend(countrylist,loc='upper left')
+plt.ylim([0,105])
+plt.xlabel('Years',fontsize=14)
+plt.ylabel('Ratio of female to male primary enrollment (%)',fontsize=14)
+plt.rc('xtick', labelsize=14) 
+plt.rc('ytick', labelsize=14)
+plt.legend(countrylist,loc='lower right', fancybox=True, framealpha=0.3)
+
 #plt.xlim([1e2,1e12])
 #plt.ylim([1,len(data)])
 
