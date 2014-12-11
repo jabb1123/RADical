@@ -1,6 +1,7 @@
 import pandas
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.interpolate import spline
 
 
 #read in our data as a pandas DataFrame (essentially a table)
@@ -10,19 +11,14 @@ import matplotlib.pyplot as plt
 LOAD_WDI=True#choose whether to load the large file or a working subset
 
 countrylist=['China',
-             'East Asia & Pacific (all income levels)',
              'Hong Kong SAR, China',
+             'Taiwan',
              'Singapore',
-             'Korea, Rep.',
-             'South Asia']
+             'Korea, Rep.']
 indicatorlist=['GDP growth (annual %)',
-                'GDP (constant LCU)',
-                'Employment to population ratio, 15+, female (%) (modeled ILO estimate)',
-                'Wage and salaried workers, female (% of females employed)',
                 'Urban population growth (annual %)',
                 'Urban population (% of total)',
-                'GDP per capita (current US$)',
-                'GDP (current US$)']
+                'GDP per capita (current US$)']
 
 if LOAD_WDI:
     data=pandas.read_csv('WDI_Data.csv')#the whole thing!!!
@@ -60,7 +56,10 @@ data['Rank']=range(1,len(data)+1)
 
 years=[]
 for year in range(1960,2013+1):years.append(str(year))
-    
+
+years_broke = []
+for year in range(1980,2013+1):years_broke.append(str(year))
+ 
 #choose rows again to find data on a specific country
 #print data[data['Country Name']=='India']
 #print data['2012'][data['Country Name']=='India']
@@ -68,7 +67,7 @@ for year in range(1960,2013+1):years.append(str(year))
 regioncolors={'South Asia':(0,1,1), 'Europe & Central Asia':(1,.7,0), 
               'Middle East & North Africa':(0,1,0), 'East Asia & Pacific':(1,0,0),
               'Sub-Saharan Africa':(0,0,1), 'Latin America & Caribbean':(1,1,0)}
-color=['blue','red','purple','green','orange','cyan','brown','lime','yellow',
+color=['red','salmon','crimson','blue','cyan','coral','brown','lime','yellow',
        'teal','crimson','coral','khaki','gold','salmon']              
               
 shift_regions=.0
@@ -81,28 +80,41 @@ deltaregion={'South Asia':100**shift_regions,
 
 mymarkersize=100    
 #Choose indicator to plot
-indicator=indicatorlist[5]
-
-plt.close('all')
-fig=plt.figure(1,figsize=(12, 8), dpi=80)
+#plt.close('all')
 colorindex=0 #cycle colors
-for country in countrylist:
-    plt.plot(range(1960,2013+1),data[years][(data['Country Name']==country)&
-        (data['Indicator Name']==indicator)].values[0],'-',linewidth=2.5,
-        markersize=mymarkersize,alpha=1,color=color[colorindex],
-        markeredgecolor=(0,0,0))
-    colorindex +=1
+for indicator in indicatorlist:
+    colorindex=0
+    fig=plt.figure(figsize=(12, 8), dpi=80)
+    for country in countrylist:
+        if country == 'Taiwan' and indicator == 'GDP per capita (current US$)':
+            x = np.array(range(1980,2013+1))
+            y = np.array(data[years_broke][(data['Country Name']==country)&(data['Indicator Name']==indicator)].values[0])
+        else:
+            x = np.array(range(1960,2013+1))
+            y = np.array(data[years][(data['Country Name']==country)&(data['Indicator Name']==indicator)].values[0])
+        x_smooth = np.linspace(x.min(),x.max(), 100)
+        y_smooth = spline(x, y, x_smooth)
+        plt.plot(
+            x_smooth,
+            y_smooth,
+            '-',
+            linewidth=2.5,
+            markersize=mymarkersize,alpha=1,
+            color=color[colorindex],
+            markeredgecolor=(0,0,0))
+        colorindex +=1
+    plt.grid(which='both')
+    #plt.ylim([0,105])
+    plt.xlabel('Years',fontsize=14)
+    plt.ylabel(indicator,fontsize=14)
+    plt.rc('xtick', labelsize=14) 
+    plt.rc('ytick', labelsize=14)
+    plt.legend(countrylist,loc='lower right', fancybox=True, framealpha=0.3)
 
 
 #plt.title(indicator+', '+rankcol)
 #plt.title(indicator+', 1990-2012',fontsize=16)
-plt.grid(which='both')
-#plt.ylim([0,105])
-plt.xlabel('Years',fontsize=14)
-plt.ylabel(indicator,fontsize=14)
-plt.rc('xtick', labelsize=14) 
-plt.rc('ytick', labelsize=14)
-plt.legend(countrylist,loc='lower right', fancybox=True, framealpha=0.3)
+
 
 #plt.xlim([1e2,1e12])
 #plt.ylim([1,len(data)])
