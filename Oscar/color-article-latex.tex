@@ -26,15 +26,20 @@
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor} %usenames: 16 HTML base colors%dvipsnames: 64 more colors%svgnames: 150 colors%table: colors in tables
 
-\usepackage{url} 	%allow url references in bibtex
+\usepackage[hyphens]{url} 	%allow url references in bibtex
 \usepackage[colorlinks=true,urlcolor=DarkRed,linkcolor=DarkRed,citecolor=DarkRed]{hyperref}
+%\renewcommand{\href}[2]{\href{#1}{\url{#2}}}
 %\href{mailto:jomm@olin.edu}{jomm at olin dot edu}
 
+\overfullrule=2cm%show overfull locations; useful for debugging
 
 \usepackage[fleqn]{amsmath} % Math packages
 \interdisplaylinepenalty=2500 %don't allow line breaks in the middle of multi-line equations
 
 \usepackage[margin=1in]{geometry}
+\linespread{1.03}
+%\usepackage{parskip}%add spacing between paragraphs
+\setlength{\parindent}{20pt}%15pt normally
 
 \usepackage[hang, normal,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
@@ -137,6 +142,10 @@ Figures and tables should always be referenced within the text, as in the case o
 \includegraphics[width=\textwidth]{Literacy.pdf}\caption{\label{fig:myfigure2}As much as possible, the graph should speak by itself. However, you should write a caption that captures a more nuanced analysis of the dataset. The source citation should be in the caption directly. {\tt Data: World Bank World Development Indicators~\cite{wdi}. Source code for figure:~\href{https://github.com/jabb1123/RADical/blob/master/Oscar/wdiplots.py}{wdiplots.py}.}}
 \end{figure*}
 
+\section*{Testing Citations}
+Citing papers~\cite{cnn},~\cite{prb} and~\cite{ssrc}.
+
+
 \begin{table}
 \caption{\label{tab:mytable}Random table}
 \centering
@@ -190,6 +199,16 @@ Collier, Paul and Dollar, David, (2001), Can the World Cut Poverty in Half? How 
 
 \bibitem{wdi}
 World Bank. World Development Indicators (WDI) online database. Washington, DC. \url{http://data.worldbank.org/data-catalog/world-development-indicators}. Data retrieved September 24, 2014.
+
+\bibitem{cnn}
+Davies, Catriona. ``Mideast Women Beat Men in Education, Lose out at Work." CNN. Cable News Network, 01 Jan. 1970. Web. 04 Dec. 2014. \url{http://www.cnn.com/2012/06/01/world/meast/middle-east-women-education/}.
+
+\bibitem{prb}
+Moghadam, Valentine M., and Farzaneh Roudi-Fahimi. ``Empowering Women, Developing Society: Female Education in the Middle East and North Africa." Population Reference Bureau, n.d. Web. 03 Dec. 2014. \href{http://www.prb.org/Publications/Reports/2003/EmpoweringWomenDevelopingSocietyFemaleEducationintheMiddleEastandNorthAfrica.aspx}{\tt{http://www.prb.org/Publications/Repor ts/2003/EmpoweringWomenDevelopingSoci etyFemaleEducationintheMiddleEastandN orthAfrica.aspx}}.
+%\url{http://www.prb.org/Publications/Reports/2003/EmpoweringWomenDevelopingSocietyFemaleEducationintheMiddleEastandNorthAfrica.aspx}.
+
+\bibitem{ssrc}
+Shami, Seteney. ``Higher Education and Social Inequality in Comparative Perspective (U.S. and Egypt)." Social Science Research Committee, n.d. Web. 04 Dec. 2014. \url{http://www.ssrc.org/programs/higher-education-and-social-inequality-in-comparative-perspective-us-and-egypt/}.
 
 \end{thebibliography}
 
